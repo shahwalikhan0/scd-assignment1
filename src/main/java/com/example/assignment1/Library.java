@@ -164,15 +164,15 @@ public class Library {
             for (Item item : items) {
                 if (item instanceof Book) {
                     Book book = (Book) item;
-                    writer.println(1 + "," + book.getId() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getYear());
+                    writer.println(1 + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getYear());
                 }
                 else if (item instanceof Magazine) {
                     Magazine magazine = (Magazine) item;
-                    writer.println(2 + "," + magazine.getId() + "," + magazine.getTitle() + "," + magazine.getPublisher() + "," + String.join(";", magazine.getAuthors()));
+                    writer.println(2 + "," + magazine.getTitle() + "," + String.join(",", magazine.getAuthors()) + ".," + magazine.getPublisher());
                 }
                 else if (item instanceof Newspaper) {
                     Newspaper newspaper = (Newspaper) item;
-                    writer.println(3 + "," + newspaper.getId() + "," + newspaper.getTitle() + "," + newspaper.getPublisher() + "," + newspaper.getPublicationDate());
+                    writer.println(3 + "," + newspaper.getTitle() + "," + newspaper.getPublisher() + "," + newspaper.getPublicationDate());
                 }
             }
         } catch (IOException e) {
