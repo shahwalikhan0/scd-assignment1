@@ -131,8 +131,18 @@ public class Library {
                         items.add(new Book(title, author, year));
                         break;
                     case 2:
-                        String publisher = parts[2];
-                        String[] authors = parts[3].split(";");
+                        int count = 2;
+                        String[] authors = new String[parts.length-3];
+                        for(; count< parts.length; count++){
+                            System.out.println(parts[count]);
+                            if(parts[count].endsWith(".")){
+                                authors[count-2] = parts[count].substring(0, parts[count].length()-1);
+                                break;
+                            }
+                            authors[count-2] = parts[count];
+                        }
+                        count++;
+                        String publisher = parts[count];
                         items.add(new Magazine(title, publisher, authors));
                         break;
                     case 3:
@@ -154,15 +164,15 @@ public class Library {
             for (Item item : items) {
                 if (item instanceof Book) {
                     Book book = (Book) item;
-                    writer.println(1 + "," + book.getId() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getYear());
+                    writer.println(1 + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getYear());
                 }
                 else if (item instanceof Magazine) {
                     Magazine magazine = (Magazine) item;
-                    writer.println(2 + "," + magazine.getId() + "," + magazine.getTitle() + "," + magazine.getPublisher() + "," + String.join(";", magazine.getAuthors()));
+                    writer.println(2 + "," + magazine.getTitle() + "," + String.join(",", magazine.getAuthors()) + ".," + magazine.getPublisher());
                 }
                 else if (item instanceof Newspaper) {
                     Newspaper newspaper = (Newspaper) item;
-                    writer.println(3 + "," + newspaper.getId() + "," + newspaper.getTitle() + "," + newspaper.getPublisher() + "," + newspaper.getPublicationDate());
+                    writer.println(3 + "," + newspaper.getTitle() + "," + newspaper.getPublisher() + "," + newspaper.getPublicationDate());
                 }
             }
         } catch (IOException e) {

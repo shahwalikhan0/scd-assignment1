@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class Book extends Item {
 
-    private String title;
     private String author;
     private int year;
 
@@ -22,7 +21,7 @@ public class Book extends Item {
     }
 
     public String getTitle() {
-        return title;
+        return super.getTitle();
     }
 
     public String getAuthor() {
@@ -34,7 +33,7 @@ public class Book extends Item {
     }
 
     public void setTitle(String t) {
-        title = t;
+        super.setTitle(t);
     }
 
     public void setAuthor(String a) {
