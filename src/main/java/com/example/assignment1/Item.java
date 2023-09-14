@@ -1,8 +1,10 @@
 package com.example.assignment1;
 
-import java.util.Scanner;
+interface Configuration {
+    public void display();
+}
 
-public class Item {
+public class Item implements Configuration{
     private static int nextId = 100;
     private String title;
     private int id;
