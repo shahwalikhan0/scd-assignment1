@@ -131,8 +131,18 @@ public class Library {
                         items.add(new Book(title, author, year));
                         break;
                     case 2:
-                        String publisher = parts[2];
-                        String[] authors = parts[3].split(";");
+                        int count = 2;
+                        String[] authors = new String[parts.length-3];
+                        for(; count< parts.length; count++){
+                            System.out.println(parts[count]);
+                            if(parts[count].endsWith(".")){
+                                authors[count-2] = parts[count].substring(0, parts[count].length()-1);
+                                break;
+                            }
+                            authors[count-2] = parts[count];
+                        }
+                        count++;
+                        String publisher = parts[count];
                         items.add(new Magazine(title, publisher, authors));
                         break;
                     case 3:
