@@ -18,6 +18,11 @@ public class Magazine extends Item {
         System.out.println("Publisher: " + publisher);
         System.out.println("Authors: " + String.join(", ", authors));
     }
+    @Override
+    public void calculateCost() {
+        double cost  = this.getCost() * this.getPopularity();
+        System.out.println("Cost: " + cost);
+    }
 
     @Override
     public void edit() {

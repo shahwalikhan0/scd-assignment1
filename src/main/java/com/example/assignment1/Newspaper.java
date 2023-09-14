@@ -34,6 +34,11 @@ public class Newspaper extends Item {
         setPublicationDate(publicationDate);
     }
 
+    @Override
+    public void calculateCost() {
+        double cost = 10+5;
+        System.out.println("Cost: " + cost);
+    }
     private void setPublicationDate(String publicationDate) {
         this.publicationDate = publicationDate;
     }

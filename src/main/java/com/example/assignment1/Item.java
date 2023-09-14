@@ -4,6 +4,7 @@ import java.util.List;
 
 interface Configuration {
     public void display();
+    public void calculateCost();
 }
 
 public class Item implements Configuration{
@@ -79,6 +80,9 @@ public class Item implements Configuration{
 
     public void removeBorrower(Borrower borrower) {
         borrowers.remove(borrower);
+    }
+
+    public void calculateCost() {
     }
 }
 
