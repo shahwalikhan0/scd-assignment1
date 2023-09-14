@@ -20,6 +20,11 @@ public class Book extends Item {
         System.out.println("Year: " + year);
     }
 
+    @Override
+    public void calculateCost() {
+        double cost  = this.getCost() + (0.20 * this.getCost()) + 200;
+        System.out.println("Cost: " + cost);
+    }
     public String getTitle() {
         return super.getTitle();
     }

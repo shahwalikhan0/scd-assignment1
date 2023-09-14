@@ -247,6 +247,7 @@ public class Library {
         }
 
         item.setBorrowed(true);
+        item.calculateCost();
         item.increasePopularity();
         item.setBorrower(borrower);
         borrower.borrowItem(item);
