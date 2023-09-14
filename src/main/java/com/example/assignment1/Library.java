@@ -98,7 +98,7 @@ public class Library {
             System.out.println("Item not found.");
             return;
         }
-        item.display();
+        displayItem(item);
     }
 
     public Item findItemById(int id) {
@@ -179,5 +179,7 @@ public class Library {
             e.printStackTrace();
         }
     }
-
+    public void displayItem(Item item){
+        item.display();
+    }
 }
