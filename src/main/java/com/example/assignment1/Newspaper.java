@@ -6,8 +6,8 @@ public class Newspaper extends Item {
     private String publisher;
     private String publicationDate;
 
-    public Newspaper(String title, String publisher, String publicationDate) {
-        super(title);
+    public Newspaper(String title, String publisher, String publicationDate, int popularity, int cost) {
+        super(title, popularity, cost);
         this.publisher = publisher;
         this.publicationDate = publicationDate;
     }

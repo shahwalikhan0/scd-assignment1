@@ -6,8 +6,8 @@ public class Magazine extends Item {
     private String publisher;
     private String[] authors;
 
-    public Magazine(String title, String publisher, String[] authors) {
-        super(title);
+    public Magazine(String title, String publisher, String[] authors, int popularity, int cost) {
+        super(title, popularity, cost);
         this.publisher = publisher;
         this.authors = authors;
     }
