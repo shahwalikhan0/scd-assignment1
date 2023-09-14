@@ -1,25 +1,24 @@
 package com.example.assignment1;
 
-public class Book {
-    private static int nextId = 1;
+import java.util.Scanner;
 
-    private int id;
+public class Book extends Item {
+
     private String title;
     private String author;
     private int year;
 
     public Book(String t, String a, int y) {
-        id = nextId++;
-        title = t;
+        super(t);
         author = a;
         year = y;
     }
 
+    @Override
     public void display() {
-        System.out.println("ID: " + id + "\nTitle: " + title + " by " + author + " (" + year + ")");
-    }
-    public int getId() {
-        return id;
+        super.display();
+        System.out.println("Author: " + author);
+        System.out.println("Year: " + year);
     }
 
     public String getTitle() {
@@ -32,10 +31,6 @@ public class Book {
 
     public int getYear() {
         return year;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setTitle(String t) {
@@ -51,7 +46,18 @@ public class Book {
     }
 
     @Override
-    public String toString() {
-        return "ID: " + id + "\nTitle: " + title + " by " + author + " (" + year + ")";
+    public void edit() {
+        super.edit();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the title of the book: ");
+        String title = scanner.nextLine();
+        System.out.print("Enter the author of the book: ");
+        String author = scanner.nextLine();
+        System.out.print("Enter the year of publication of the book: ");
+        int year = scanner.nextInt();
+        scanner.nextLine();
+        setTitle(title);
+        setAuthor(author);
+        setYear(year);
     }
 }
