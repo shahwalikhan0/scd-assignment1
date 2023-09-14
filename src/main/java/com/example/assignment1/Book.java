@@ -7,8 +7,8 @@ public class Book extends Item {
     private String author;
     private int year;
 
-    public Book(String t, String a, int y) {
-        super(t);
+    public Book(String t, String a, int y, int p, int c) {
+        super(t, p, c);
         author = a;
         year = y;
     }
