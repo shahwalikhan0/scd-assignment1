@@ -35,7 +35,6 @@ public class Application {
             switch (choice) {
                 case 1:
                     library.addItem();
-                    System.out.println("Item added successfully.");
                     break;
                 case 2:
                     library.editItem();

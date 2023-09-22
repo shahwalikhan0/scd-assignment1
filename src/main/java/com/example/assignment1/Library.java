@@ -31,6 +31,10 @@ public class Library {
             System.out.print("Enter the Price of the book: ");
             int price = scanner.nextInt();
             scanner.nextLine();
+            if(price < 0) {
+                System.out.println("Price cannot be negative");
+                return;
+            }
             Book book = new Book(title, author, year, 0, price);
             items.add(book);
         } else if (type == 2) {
@@ -47,6 +51,10 @@ public class Library {
             String title = scanner.nextLine();
             System.out.print("Enter the Price of the magazine: ");
             int price = scanner.nextInt();
+            if(price < 0) {
+                System.out.println("Price cannot be negative");
+                return;
+            }
             items.add(new Magazine(title, pub, authorsList.toArray(new String[0]), 0, price));
         } else if (type == 3) {
             System.out.print("Enter the publisher of the newspaper: ");
@@ -57,10 +65,16 @@ public class Library {
             String title = scanner.nextLine();
             System.out.print("Enter the Price of the newspaper: ");
             int price = scanner.nextInt();
+            if(price < 0) {
+                System.out.println("Price cannot be negative");
+                return;
+            }
             items.add(new Newspaper(title, pub, date, 0, price));
         } else {
             System.out.println("Invalid input");
+            return;
         }
+        System.out.println("Item added successfully.");
     }
 
     public void addItem(Item item) {
