@@ -5,9 +5,11 @@ import java.util.List;
 interface Configuration {
     public void display();
     public void calculateCost();
+
+    Object getAuthor();
 }
 
-public class Item implements Configuration{
+public abstract class Item implements Configuration{
     private static int nextId = 100;
     private String title;
     private int id;
@@ -83,6 +85,12 @@ public class Item implements Configuration{
     }
 
     public void calculateCost() {
+    }
+
+    public abstract String getAuthor();
+
+    protected void setCost(int cost) {
+        this.cost = cost;
     }
 }
 

@@ -6,11 +6,13 @@ public class Book extends Item {
 
     private String author;
     private int year;
+    private String content;
 
-    public Book(String t, String a, int y, int p, int c) {
+    public Book(String t, String a, int y, int p, int c, String content) {
         super(t, p, c);
         author = a;
         year = y;
+        this.content = content;
     }
 
     @Override
@@ -29,6 +31,7 @@ public class Book extends Item {
         return super.getTitle();
     }
 
+    @Override
     public String getAuthor() {
         return author;
     }
@@ -63,5 +66,12 @@ public class Book extends Item {
         setTitle(title);
         setAuthor(author);
         setYear(year);
+    }
+
+    public void setCost(int cost) {
+        super.setCost(cost);
+    }
+    public String getContent() {
+        return content;
     }
 }

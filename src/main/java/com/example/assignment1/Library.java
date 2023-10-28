@@ -1,5 +1,8 @@
 package com.example.assignment1;
 
+import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.util.*;
 
@@ -18,88 +21,43 @@ public class Library {
         return type;
     }
 
-    public void addItem() {
-        Scanner scanner = new Scanner(System.in);
-        int type = getItemType();
+    public void addItem(int type, String title, String author, int year, int price, String content) {
         if (type == 1) {
-            System.out.print("Enter the title of the book: ");
-            String title = scanner.nextLine();
-            System.out.print("Enter the author of the book: ");
-            String author = scanner.nextLine();
-            System.out.print("Enter the year of publication of the book: ");
-            int year = scanner.nextInt();
-            System.out.print("Enter the Price of the book: ");
-            int price = scanner.nextInt();
-            scanner.nextLine();
             if(price < 0) {
                 System.out.println("Price cannot be negative");
                 return;
             }
-            Book book = new Book(title, author, year, 0, price);
+            Book book = new Book(title, author, year, 0, price, content);
             items.add(book);
-        } else if (type == 2) {
-            System.out.print("Enter the authors of the magazine, press 0 to finish: ");
-            List<String> authorsList = new ArrayList<>();
-            String author = scanner.nextLine();
-            while (!author.equals("0")) {
-                authorsList.add(author);
-                author = scanner.nextLine();
-            }
-            System.out.print("Enter the publisher name: ");
-            String pub = scanner.nextLine();
-            System.out.print("Enter the title of the magazine: ");
-            String title = scanner.nextLine();
-            System.out.print("Enter the Price of the magazine: ");
-            int price = scanner.nextInt();
-            if(price < 0) {
-                System.out.println("Price cannot be negative");
-                return;
-            }
-            items.add(new Magazine(title, pub, authorsList.toArray(new String[0]), 0, price));
-        } else if (type == 3) {
-            System.out.print("Enter the publisher of the newspaper: ");
-            String pub = scanner.nextLine();
-            System.out.print("Enter the publication date of the newspaper DD-MM-YYYY: ");
-            String date = scanner.nextLine();
-            System.out.print("Enter the title of the newspaper: ");
-            String title = scanner.nextLine();
-            System.out.print("Enter the Price of the newspaper: ");
-            int price = scanner.nextInt();
-            if(price < 0) {
-                System.out.println("Price cannot be negative");
-                return;
-            }
-            items.add(new Newspaper(title, pub, date, 0, price));
         } else {
             System.out.println("Invalid input");
             return;
         }
-        System.out.println("Item added successfully.");
     }
 
     public void addItem(Item item) {
         items.add(item);
     }
 
-    public void editItem() {
-        System.out.println("Enter the ID of the item you want to edit: ");
-        Scanner scanner = new Scanner(System.in);
-        int id = scanner.nextInt();
-        scanner.nextLine();
+    public void editBook(int id, String title, String author, int year, int cost) {
         Item item = findItemById(id);
         if (item == null) {
             System.out.println("Item not found.");
             return;
         }
-        item.edit();
-        System.out.println("Item edited successfully.");
+        if (item instanceof Book) {
+            Book book = (Book) item;
+            book.setTitle(title);
+            book.setAuthor(author);
+            book.setYear(year);
+            book.setCost(cost);
+            System.out.println("Book edited successfully.");
+        } else {
+            System.out.println("Invalid item type.");
+        }
     }
 
-    public void deleteItem() {
-        System.out.println("Enter the ID of the item you want to delete: ");
-        Scanner scanner = new Scanner(System.in);
-        int id = scanner.nextInt();
-        scanner.nextLine();
+    public void deleteItem(int id) {
         Item item = findItemById(id);
         if (item == null) {
             System.out.println("Item not found.");
@@ -167,31 +125,8 @@ public class Library {
                         int year = Integer.parseInt(parts[3]);
                         popularity = Integer.parseInt(parts[4]);
                         cost = Integer.parseInt(parts[5]);
-                        items.add(new Book(title, author, year, popularity, cost));
-                        break;
-                    case 2:
-                        int count = 2;
-                        String[] authors = new String[parts.length-5];
-                        boolean flag = false;
-                        for(; count< parts.length; count++){
-                            if(parts[count].endsWith(".")){
-                                authors[count-2] = parts[count].substring(0, parts[count].length()-1);
-                                break;
-                            }
-                            authors[count-2] = parts[count];
-                        }
-                        count++;
-                        String publisher = parts[count++];
-                        popularity = Integer.parseInt(parts[count++]);
-                        cost = Integer.parseInt(parts[count]);
-                        items.add(new Magazine(title, publisher, authors, popularity, cost));
-                        break;
-                    case 3:
-                        String newspaperPublisher = parts[2];
-                        String publicationDate = parts[3];
-                        popularity = Integer.parseInt(parts[4]);
-                        cost = Integer.parseInt(parts[5]);
-                        items.add(new Newspaper(title, newspaperPublisher, publicationDate, popularity, cost));
+                        String content = parts[6];
+                        items.add(new Book(title, author, year, popularity, cost, content));
                         break;
                     default:
                         System.out.println("Invalid item type: " + itemType);
@@ -209,13 +144,8 @@ public class Library {
                     Book book = (Book) item;
                     writer.println(1 + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getYear() + "," + book.getPopularity() + "," + book.getCost());
                 }
-                else if (item instanceof Magazine) {
-                    Magazine magazine = (Magazine) item;
-                    writer.println(2 + "," + magazine.getTitle() + "," + String.join(",", magazine.getAuthors()) + ".," + magazine.getPublisher() + "," + magazine.getPopularity() + "," + magazine.getCost());
-                }
-                else if (item instanceof Newspaper) {
-                    Newspaper newspaper = (Newspaper) item;
-                    writer.println(3 + "," + newspaper.getTitle() + "," + newspaper.getPublisher() + "," + newspaper.getPublicationDate() + "," + newspaper.getPopularity() + "," + newspaper.getCost());
+                else {
+                    System.out.println("Invalid item type.");
                 }
             }
         } catch (IOException e) {
@@ -315,5 +245,52 @@ public class Library {
         item.setBorrowed(false);
         borrower.returnItem(item);
         System.out.println("Item returned successfully.");
+    }
+
+public Object[][] getDataForJTable() {
+    Object[][] data = new Object[items.size()][5];
+    for (int i = 0; i < items.size(); i++) {
+        Item item = items.get(i);
+        data[i][0] = item.getId();
+        data[i][1] = item.getTitle();
+        data[i][2] = item.getAuthor();
+        data[i][3] = item.getCost();
+        JButton readButton = new JButton("Read");
+        readButton.addActionListener(e -> displayContent(item));
+        data[i][4] = readButton;
+    }
+    return data;
+}
+
+    private void displayContent(Item item) {
+        JFrame contentFrame = new JFrame("Book Content");
+        contentFrame.setSize(400, 300);
+
+        JTextArea contentArea = new JTextArea();
+        Book book = (Book) item;
+        contentArea.setText("Content: " + book.getContent());
+        contentArea.setEditable(false);
+
+        JScrollPane scrollPane = new JScrollPane(contentArea);
+        contentFrame.add(scrollPane);
+
+        contentFrame.setVisible(true);
+
+        contentFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int option = JOptionPane.showConfirmDialog(contentFrame, "Are you sure you want to finish reading?", "Close Window?", JOptionPane.YES_NO_OPTION);
+                if (option == 1) {
+                    contentFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                } else {
+                    contentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                }
+            }
+        });
+    }
+
+
+    public List getItems() {
+        return items;
     }
 }
